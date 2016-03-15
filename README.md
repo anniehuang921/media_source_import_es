@@ -27,5 +27,5 @@ The situation of importing data (the first site is count number): ** (資料進�
 #### 附註
 * 會自動產生一個 csv 檔 ，可參考 twitter_data.csv
 * 若有遇到 編碼問題，如：`UnicodeDecodeError: 'ascii' codec can't decode byte 0xec in position 101: ordinal not in range(128)`
-建議可以在確定是否在 py3 環境
+建議可以確定是否在 py3 環境
 * 如想看到此 index 的 schema，可將 print (es_index.get_mapping(index=indexName,doc_type=typeName)) 給打開（即消去 # )
