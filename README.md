@@ -7,7 +7,8 @@ For NCCU Floodfire Team, let twitter data import to elasticsearch.
 
 (可參考 twitter_source.xlsx 格式)
 
-### 使用方法
+---
+## 使用方法
 python 3 環境，command line 下
 ```
 $ python twitter_import_es.py oooo.xlsx
@@ -18,6 +19,8 @@ $ python twitter_import_es.py oooo.xlsx
 The filename is **檔案名稱.xlsx**.
 The situation of importing data (the first site is count number): ** (資料進去筆數, 錯誤訊息) **
 
+
+---
 
 #### 附註
 * 會自動產生一個 csv 檔 ，可參考 twitter_data.csv
