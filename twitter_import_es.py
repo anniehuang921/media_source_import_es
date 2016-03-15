@@ -120,5 +120,6 @@ def CSVimportES(indexName,typeName,fileName):
         for item in raw_data:
             datas.append({"_index":indexName,"_type":typeName,"_source":item})
     ttest=helpers.bulk(es,datas,chunk_size=100)
+    # print (es_index.get_mapping(index=indexName,doc_type=typeName))
     print ("The situation of importing data (the first site is count number): "+str(ttest))
 CSVimportES("platform","twitter","twitter_data.csv")
