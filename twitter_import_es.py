@@ -25,31 +25,6 @@ filename = sys.argv[1:][0]
 print ("The filename is " + filename +".")
 
 df = pd.read_excel(filename)
-df=df.rename(columns = {'from_user_lang':'from_user_language'})
-df=df.rename(columns = {'location':'from_user_location'})
-df=df.rename(columns = {'created_at':'time'})
-df=df.rename(columns = {'text':'content'})
-df=df.rename(columns = {'to_user_id':'tags_id'})
-df=df.rename(columns = {'to_user_name':'tags_name'})
-df['platform'] ='twitter'
-
-time=[]
-from datetime import datetime
-for i in df['time']:
-    date = datetime.strptime(str(i),"%Y-%m-%d %H:%M:%S")
-    time.append(datetime.isoformat(date)+'+08:00')
-df['time']= time
-geo=[]
-for i in range(len(df)):
-    if np.isnan(df['geo_lat'][i]):
-        geo.append(None)
-    else:
-        geo.append(str(df['geo_lat'][i])+","+str(df['geo_lng'][i]))
-df['geo']=geo
-df =df[['platform','id','time','from_user_name','from_user_id','from_user_language','from_user_realname'
-    ,'from_user_location','geo','content','favorite_count','tags_name','tags_id']]
-df.to_csv('twitter_data.csv', index =False,encoding="utf8")
-
 properties={
 'platform':{ 'type': 'string'  },
 'content':{ 'type': 'string'  },
@@ -91,9 +66,50 @@ properties={
 'tags_name':{ 'type': 'string'  },#
 'title':{ 'type': 'string'  },
 'domain':{'type':'string'},
-'update_time':{'type':   'date',
-               'format': 'strict_date_optional_time||epoch_millis'  }
+#'update_time':{'type':   'date',
+#               'format': 'strict_date_optional_time||epoch_millis'  }
                 }
+rename={'from_user_lang':'from_user_language','location':'from_user_location','created_at':'time',
+ 'text':'content','to_user_id':'tags_id','to_user_name':'tags_name'}
+
+
+for i in rename.keys():
+    if i in df.columns:
+        df = df.rename(columns={i:rename[i]})      
+    else:
+        pass
+
+if "geo_lat" in df.columns:
+    geo=[]
+    for i in range(len(df)):
+        if np.isnan(df['geo_lat'][i]):
+            geo.append(None)
+        else:
+            geo.append(str(df['geo_lat'][i])+","+str(df['geo_lng'][i]))
+else:
+    geo=None
+
+df['geo']=geo
+df['platform'] ='twitter'
+
+if 'time' in df.columns:
+    time=[]
+    from datetime import datetime
+    for i in df['time']:
+        date = datetime.strptime(str(i),"%Y-%m-%d %H:%M:%S")
+        time.append(datetime.isoformat(date)+'+08:00')
+    df['time']= time
+    
+for i in properties.keys():
+    if i not in df.columns:
+        df[i]= None
+
+keys=list(map(lambda x: x, properties.keys()))
+
+df =df[keys]
+
+
+df.to_csv('twitter_data.csv', index =False,encoding="utf8")
 
 def CSVimportES(indexName,typeName,fileName):
     if os.path.isfile(fileName) == False:
