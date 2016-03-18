@@ -1,6 +1,9 @@
 # coding: utf-8
 #!/usr/bin/env python3
 #encoding=utf-8
+from time import *
+
+t = process_time()
 import sys
 import json
 import getopt
@@ -66,8 +69,8 @@ properties={
 'tags_name':{ 'type': 'string'  },#
 'title':{ 'type': 'string'  },
 'domain':{'type':'string'},
-#'update_time':{'type':   'date',
-#               'format': 'strict_date_optional_time||epoch_millis'  }
+'update_time':{'type':   'date',
+               'format': 'strict_date_optional_time||epoch_millis'  }
                 }
 rename={'from_user_lang':'from_user_language','location':'from_user_location','created_at':'time',
  'text':'content','to_user_id':'tags_id','to_user_name':'tags_name'}
@@ -99,6 +102,19 @@ if 'time' in df.columns:
         date = datetime.strptime(str(i),"%Y-%m-%d %H:%M:%S")
         time.append(datetime.isoformat(date)+'+08:00')
     df['time']= time
+
+update_time = []
+if 'update_time' in df.columns:
+    from datetime import datetime
+    for i in range(len(df)):
+        if df['update_time'][i]!= None:
+            date = datetimr.strptime(str(df['update_time'][i]),"%Y-%m-%d %H:%M:%S")
+            update_time.append(datetime.isoformat(date)+'+08:00')
+        else:
+            update_time.append(df['time'][i])
+else:
+    update_time = time
+df['update_time'] = update_time
     
 for i in properties.keys():
     if i not in df.columns:
@@ -139,3 +155,5 @@ def CSVimportES(indexName,typeName,fileName):
     # print (es_index.get_mapping(index=indexName,doc_type=typeName))
     print ("The situation of importing data (the first site is count number): "+str(ttest))
 CSVimportES("platform","twitter","twitter_data.csv")
+elapsed_time = process_time() - t
+print ("The time you spend:"+ str(elapsed_time) + " seconds.")
