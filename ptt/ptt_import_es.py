@@ -27,7 +27,7 @@ es_index=IndicesClient(es)
 filename = sys.argv[1:][0]
 print ("The filename is " + filename +".")
 
-df = pd.read_excel(filename)
+df = pd.read_csv(filename)
 properties={
 'platform':{ 'type': 'string'  },
 'content':{ 'type': 'string'  },
@@ -72,9 +72,8 @@ properties={
 'update_time':{'type':   'date',
                'format': 'strict_date_optional_time||epoch_millis'  }
                 }
-rename={'from_user_lang':'from_user_language','location':'from_user_location','created_at':'time',
- 'text':'content','to_user_id':'tags_id','to_user_name':'tags_name'}
-
+rename={'forum':'media_name','author':'from_user_name','nick':'from_user_nick','ts':'time'}
+#'forum', 'author', 'nick', 'title', 'content', 'ts', 'platform'
 
 for i in rename.keys():
     if i in df.columns:
@@ -93,7 +92,9 @@ else:
     geo=None
 
 df['geo']=geo
-df['platform'] ='twitter'
+    
+    
+df['platform'] ='ptt'
 
 if 'time' in df.columns:
     time=[]
@@ -115,17 +116,15 @@ if 'update_time' in df.columns:
 else:
     update_time = time
 df['update_time'] = update_time
-    
+
 for i in properties.keys():
     if i not in df.columns:
         df[i]= None
 
 keys=list(map(lambda x: x, properties.keys()))
-
 df =df[keys]
 
-
-df.to_csv('twitter_data.csv', index =False,encoding="utf8")
+df.to_csv('ptt_data.csv', index =False,encoding="utf8")
 
 def CSVimportES(indexName,typeName,fileName):
     if os.path.isfile(fileName) == False:
@@ -151,10 +150,10 @@ def CSVimportES(indexName,typeName,fileName):
         raw_data=csv.DictReader(p_file)
         for item in raw_data:
             datas.append({"_index":indexName,"_type":typeName,"_source":item})
-            print (item)
+            #print (item)
     ttest=helpers.bulk(es,datas,chunk_size=100)
     # print (es_index.get_mapping(index=indexName,doc_type=typeName))
     print ("The situation of importing data (the first site is count number): "+str(ttest))
-CSVimportES("platform","twitter","twitter_data.csv")
+CSVimportES("platform","ptt","ptt_data.csv")
 elapsed_time = process_time() - t
 print ("The time you spend:"+ str(elapsed_time) + " seconds.")
