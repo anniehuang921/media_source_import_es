@@ -49,7 +49,8 @@ properties={
 'title':{ 'type': 'string'  },
 'domain':{'type':'string'},
 'update_time':{'type':   'date',
-               'format': 'strict_date_optional_time||epoch_millis'  }
+               'format': 'strict_date_optional_time||epoch_millis'  },
+'image':{'type':'string'}
                 }
 ```
 ---
