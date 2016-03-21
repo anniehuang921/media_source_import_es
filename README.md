@@ -4,7 +4,8 @@
 There are different forlder for import data in elasticsearch.
 And also give the empty field null vale.
 
-Such schema (in elasticsearch, called mapping) as following kind:
+Such schema (in elasticsearch, called mapping) as following kind: 
+[fielde design gdoc](https://docs.google.com/spreadsheets/d/1z7PAA2OEveqExxWWTuY6G_mA_gR8x0xpj0HbopZK1tU/edit#gid=589125606)
 ```python
 properties={
 'platform':{ 'type': 'string'  },
