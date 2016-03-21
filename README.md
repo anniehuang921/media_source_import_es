@@ -59,5 +59,8 @@ properties={
 The function **imageuri( )**, which input string(content) and output array(image uri).
 And detect containg "http://o.ooooo/xxxx.jpg" or "http://imgur.com/xxxxx"
 
-You can run `python imageuri.py`,
+You can run `python imageuri.py` and delete the mark `#` in the last line (# test()),
 it'll run some tests.
+
+The imageuri.py has been added in each folder (ptt, twitter, news), and cause can't import such file outside the folder. 
+If you have solution for it, please go to the issue to solve it. Thanks!
