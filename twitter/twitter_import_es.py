@@ -4,6 +4,7 @@
 from time import *
 
 t = process_time()
+from imageuri import imageuri
 import sys
 import json
 import getopt
@@ -94,6 +95,9 @@ else:
     geo=None
 
 df['geo']=geo
+
+df['image']=list(map(lambda x: imageuri(x), df['content'])) 
+
 df['platform'] ='twitter'
 
 if 'time' in df.columns:
@@ -152,7 +156,7 @@ def CSVimportES(indexName,typeName,fileName):
         raw_data=csv.DictReader(p_file)
         for item in raw_data:
             datas.append({"_index":indexName,"_type":typeName,"_source":item})
-            print (item)
+            #print (item)
     ttest=helpers.bulk(es,datas,chunk_size=100)
     # print (es_index.get_mapping(index=indexName,doc_type=typeName))
     print ("The situation of importing data (the first site is count number): "+str(ttest))

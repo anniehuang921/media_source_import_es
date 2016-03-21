@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 #encoding=utf-8
+from imageuri import imageuri
 import sys
 import json
 import getopt
@@ -133,9 +134,10 @@ if action == 'import':
             line = line.strip('"').replace('\\n', '\n').replace('\\r', '\r')
             line = line.strip('"').replace('\\n', '\n').replace('\\r', '\r').replace('\\/', '/')
             item['content'] = line
+            item['image'] = list(map(lambda x:imageuri(x),line))
             counter = 0
         
-        item['platform'] ='twitter'
+        item['platform'] ='news'
         item['update_time'] = item['time']
         for i in properties.keys():
             if i not in item.keys():
