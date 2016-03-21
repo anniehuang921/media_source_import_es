@@ -70,7 +70,8 @@ properties={
 'title':{ 'type': 'string'  },
 'domain':{'type':'string'},
 'update_time':{'type':   'date',
-               'format': 'strict_date_optional_time||epoch_millis'  }
+               'format': 'strict_date_optional_time||epoch_millis'  },
+'image':{'type':'string'} 
                 }
 rename={'from_user_lang':'from_user_language','location':'from_user_location','created_at':'time',
  'text':'content','to_user_id':'tags_id','to_user_name':'tags_name'}

@@ -4,6 +4,7 @@
 from time import *
 
 t = process_time()
+from imageuri import imageuri
 import sys
 import json
 import getopt
@@ -70,7 +71,8 @@ properties={
 'title':{ 'type': 'string'  },
 'domain':{'type':'string'},
 'update_time':{'type':   'date',
-               'format': 'strict_date_optional_time||epoch_millis'  }
+               'format': 'strict_date_optional_time||epoch_millis'  },
+'image':{'type':'string'},
                 }
 rename={'forum':'media_name','author':'from_user_name','nick':'from_user_nick','ts':'time'}
 #'forum', 'author', 'nick', 'title', 'content', 'ts', 'platform'
@@ -92,7 +94,8 @@ else:
     geo=None
 
 df['geo']=geo
-    
+ 
+df['image']=list(map(lambda x: imageuri(x), df['content']))  
     
 df['platform'] ='ptt'
 
