@@ -63,4 +63,4 @@ You can run `python imageuri.py` and delete the mark `#` in the last line (# tes
 it'll run some tests.
 
 The imageuri.py has been added in each folder (ptt, twitter, news), and cause can't import such file outside the folder. 
-If you have solution for it, please go to the issue to solve it. Thanks!
+If you have solution for it, please go to the issue #2 to solve it. Thanks!
