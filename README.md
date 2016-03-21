@@ -51,3 +51,11 @@ properties={
                'format': 'strict_date_optional_time||epoch_millis'  }
                 }
 ```
+---
+# imageuri.py
+
+The function ** imageuri()**, which input string(content) and output array(image uri).
+And detect containg "http://o.ooooo/xxxx.jpg" or "http://imgur.com/xxxxx"
+
+You can run `python imageuri.py`,
+it'll run some tests.
