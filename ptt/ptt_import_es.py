@@ -4,7 +4,7 @@
 from time import *
 
 t = process_time()
-from imageuri import imageuri
+from ..pkg.imageuri import imageuri
 import sys
 import json
 import getopt
