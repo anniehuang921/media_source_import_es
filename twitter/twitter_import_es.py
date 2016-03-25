@@ -32,7 +32,6 @@ df = pd.read_excel(filename)
 properties={
 'platform':{ 'type': 'string'  },
 'content':{ 'type': 'string'  },
-'id':{ 'type': 'string'  },
 'uri':{ 'type': 'string'  },
 'time':{'type':   'date',
         'format': 'strict_date_optional_time||epoch_millis'},#"yyyy-MM-dd||yyyy-MM-dd'T'HH:mm:SSZZ||epoch_millis"  },
@@ -72,15 +71,16 @@ properties={
 'domain':{'type':'string'},
 'update_time':{'type':   'date',
                'format': 'strict_date_optional_time||epoch_millis'  },
-'image':{'type':'string'} 
+'image':{'type':'string'}
                 }
 rename={'from_user_lang':'from_user_language','location':'from_user_location','created_at':'time',
  'text':'content','to_user_id':'tags_id','to_user_name':'tags_name'}
 
-
+df["id"]= df["id"].astype(str)
+idn = df["id"]
 for i in rename.keys():
     if i in df.columns:
-        df = df.rename(columns={i:rename[i]})      
+        df = df.rename(columns={i:rename[i]})
     else:
         pass
 
@@ -95,8 +95,9 @@ else:
     geo=None
 
 df['geo']=geo
+#df['geo']= df['geo'].astype(str)
 
-df['image']=list(map(lambda x: imageuri(x), df['content'])) 
+df['image']=list(map(lambda x: imageuri(x), df['content']))
 
 df['platform'] ='twitter'
 
@@ -120,7 +121,7 @@ if 'update_time' in df.columns:
 else:
     update_time = time
 df['update_time'] = update_time
-    
+
 for i in properties.keys():
     if i not in df.columns:
         df[i]= None
@@ -132,7 +133,7 @@ df =df[keys]
 
 df.to_csv('twitter_data.csv', index =False,encoding="utf8")
 
-def CSVimportES(indexName,typeName,fileName):
+def CSVimportES(indexName,typeName,fileName,idnumber):
     if os.path.isfile(fileName) == False:
         print ("The file dose not exist.")
     if es_index.exists(indexName) == False:
@@ -154,12 +155,15 @@ def CSVimportES(indexName,typeName,fileName):
     datas=[]
     with open(fileName,'r+') as p_file:
         raw_data=csv.DictReader(p_file)
-        for item in raw_data:
-            datas.append({"_index":indexName,"_type":typeName,"_source":item})
+        raw_data = list(raw_data)
+        for i in range(len(raw_data)):
+            item = raw_data[i]
+            idorder = idnumber[i]
+            datas.append({"_index":indexName,"_type":typeName,"_id":idorder,"_source":item})
             #print (item)
     ttest=helpers.bulk(es,datas,chunk_size=100)
     # print (es_index.get_mapping(index=indexName,doc_type=typeName))
     print ("The situation of importing data (the first site is count number): "+str(ttest))
-CSVimportES("platform","twitter","twitter_data.csv")
+CSVimportES("platform","twitter","twitter_data.csv",idn)
 elapsed_time = process_time() - t
 print ("The time you spend:"+ str(elapsed_time) + " seconds.")
