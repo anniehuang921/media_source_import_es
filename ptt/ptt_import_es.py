@@ -4,7 +4,7 @@
 from time import *
 
 t = process_time()
-from ..pkg.imageuri import imageuri
+from imageuri import imageuri
 import sys
 import json
 import getopt
@@ -32,7 +32,6 @@ df = pd.read_csv(filename)
 properties={
 'platform':{ 'type': 'string'  },
 'content':{ 'type': 'string'  },
-'id':{ 'type': 'string'  },
 'uri':{ 'type': 'string'  },
 'time':{'type':   'date',
         'format': 'strict_date_optional_time||epoch_millis'},#"yyyy-MM-dd||yyyy-MM-dd'T'HH:mm:SSZZ||epoch_millis"  },
@@ -76,10 +75,11 @@ properties={
                 }
 rename={'forum':'media_name','author':'from_user_name','nick':'from_user_nick','ts':'time'}
 #'forum', 'author', 'nick', 'title', 'content', 'ts', 'platform'
+idn = df['id']
 
 for i in rename.keys():
     if i in df.columns:
-        df = df.rename(columns={i:rename[i]})      
+        df = df.rename(columns={i:rename[i]})
     else:
         pass
 
@@ -94,9 +94,9 @@ else:
     geo=None
 
 df['geo']=geo
- 
-df['image']=list(map(lambda x: imageuri(x), df['content']))  
-    
+
+df['image']=list(map(lambda x: imageuri(x), df['content']))
+
 df['platform'] ='ptt'
 
 if 'time' in df.columns:
@@ -129,7 +129,7 @@ df =df[keys]
 
 df.to_csv('ptt_data.csv', index =False,encoding="utf8")
 
-def CSVimportES(indexName,typeName,fileName):
+def CSVimportES(indexName,typeName,fileName,id_raw):
     if os.path.isfile(fileName) == False:
         print ("The file dose not exist.")
     if es_index.exists(indexName) == False:
@@ -151,12 +151,15 @@ def CSVimportES(indexName,typeName,fileName):
     datas=[]
     with open(fileName,'r+') as p_file:
         raw_data=csv.DictReader(p_file)
-        for item in raw_data:
-            datas.append({"_index":indexName,"_type":typeName,"_source":item})
+        datas_raw =list(raw_data)
+        for i in range(len(datas_raw)):
+            item = datas_raw[i]
+            idnumber = id_raw[i]
+            datas.append({"_index":indexName,"_type":typeName,"id":idnumber,"_source":item})
             #print (item)
-    ttest=helpers.bulk(es,datas,chunk_size=100)
+    ttest=helpers.bulk(es,datas, chunk_size = 100)
     # print (es_index.get_mapping(index=indexName,doc_type=typeName))
     print ("The situation of importing data (the first site is count number): "+str(ttest))
-CSVimportES("platform","ptt","ptt_data.csv")
+CSVimportES("platform","ptt","ptt_data.csv",idn)
 elapsed_time = process_time() - t
 print ("The time you spend:"+ str(elapsed_time) + " seconds.")
