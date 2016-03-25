@@ -17,7 +17,7 @@ set_ids = set()
 is_dryrun = False
 action = ''
 
-# set reactions for command 
+# set reactions for command
 opts, args = getopt.getopt(sys.argv[1:], '', ["action=", 'file=', 'dryrun', 'insert-diff'])
 for opt in opts:
     if opt[0] == '--action':
@@ -44,14 +44,13 @@ if action == 'import':
     obj = None
     datas=[]
 
-    
+
     is_exists = False
     update_count = 0
     insert_count = 0
     properties={
     'platform':{ 'type': 'string'  },
     'content':{ 'type': 'string'  },
-    'id':{ 'type': 'string'  },
     'uri':{ 'type': 'string'  },
     'time':{'type':   'date',
             'format': 'strict_date_optional_time||epoch_millis'},#"yyyy-MM-dd||yyyy-MM-dd'T'HH:mm:SSZZ||epoch_millis"  },
@@ -103,24 +102,18 @@ if action == 'import':
         if counter == 1:
             obj = None
             obj = json.loads(line)
-            id = obj['id']
-            if id in set_ids:
-                is_exists = True
-            else:
-                set_ids.add(id)
-                is_exists = False
-
+            idn = obj['id']
             need = ['normalized_id','url','created_at','source']#need = ['id','normalized_id','url']
-            item = {key:obj[key] for key in need} 
+            item = {key:obj[key] for key in need}
             change = {'normalized_id':'domain','url':'uri','created_at':'time','source':'media_id'}
             for i in change.keys():
                 if i == "created_at":
                     item['created_at'] = (item['created_at']+'000')
                 else:
                     pass
-                item[change[i]] = item.pop(i) 
+                item[change[i]] = item.pop(i)
             continue
-            
+
 
         if counter == 2:
             line = line.strip('"').replace('\\n', '\n').replace('\\r', '\r').replace('\\/', '/')
@@ -136,18 +129,17 @@ if action == 'import':
             item['content'] = line
             item['image'] = list(map(lambda x:imageuri(x),line))
             counter = 0
-        
+
         item['platform'] ='news'
         item['update_time'] = item['time']
         for i in properties.keys():
             if i not in item.keys():
                 item[i]= None
 
-        datas.append({"_index":"platform","_type":"news","_source":item})
-        
+        datas.append({"_index":"platform","_type":"news","_id":idn,"_source":item})
+
 ttest=helpers.bulk(es,datas,chunk_size=100)
 
 
 print("Finished: " + str(ttest))
 f.close()
-
