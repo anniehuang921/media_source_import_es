@@ -155,8 +155,7 @@ def CSVimportES(indexName,typeName,fileName,id_raw):
         for i in range(len(datas_raw)):
             item = datas_raw[i]
             idnumber = id_raw[i]
-            datas.append({"_index":indexName,"_type":typeName,"id":idnumber,"_source":item})
-            #print (item)
+            datas.append({"_index":indexName,"_type":typeName,"_id":idnumber,"_source":item})
     ttest=helpers.bulk(es,datas, chunk_size = 100)
     # print (es_index.get_mapping(index=indexName,doc_type=typeName))
     print ("The situation of importing data (the first site is count number): "+str(ttest))

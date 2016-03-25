@@ -1,4 +1,4 @@
-content,media_like_count,media_name,from_user_nick,from_user_category,content_language,update_time,uri,image,twi_hashtags,platform,from_user_language,share_target_title,tags_name,fb_hashtags,media_id,shared_initial_uri,like_count,from_user_realname,from_user_location,event,from_user_id,from_user_name,from_user_like_count,favorite_count,post_type,status_type,shares_count,domain,share_target_uri,from_parent_id,title,shared_title,time,shared_domain,tags_id,story_tag,comments_count,geo,shared_uri
+content,fb_hashtags,shares_count,favorite_count,from_user_realname,platform,tags_name,status_type,post_type,from_user_like_count,from_user_language,like_count,from_user_location,event,from_user_id,share_target_title,image,from_parent_id,content_language,media_like_count,tags_id,comments_count,from_user_nick,share_target_uri,media_name,time,shared_domain,domain,shared_title,uri,shared_uri,twi_hashtags,from_user_name,media_id,from_user_category,shared_initial_uri,update_time,title,geo,story_tag
 "土壤液化區，標題直接打柯文哲不敢公布的秘密
 
 結果報告說2002年就完成了，結果抹2016年柯文哲不敢公布
@@ -7,7 +7,7 @@ content,media_like_count,media_name,from_user_nick,from_user_category,content_la
 
 垃圾節目
 
---",,HatePolitics,   湯元嗎,,,2016-02-09T23:47:04+08:00,,[],,ptt,,,,,,,,,,,,sunyeah,,,,,,,,,[黑特] lbj在節目說柯文哲不敢公布,,2016-02-09T23:47:04+08:00,,,,,,
+--",,,,,ptt,,,,,,,,,,,[],,,,,,   湯元嗎,,HatePolitics,2016-02-09T23:47:04+08:00,,,,,,,sunyeah,,,,2016-02-09T23:47:04+08:00,[黑特] lbj在節目說柯文哲不敢公布,,
 "一個不會做事情  只會開除人 沒政績
 
 整天酸馬英九
@@ -23,7 +23,7 @@ content,media_like_count,media_name,from_user_nick,from_user_category,content_la
 
 賴神狂電柯P呢？
 
---",,HatePolitics,lamberjack,,,2016-02-09T22:06:04+08:00,,[],,ptt,,,,,,,,,,,,Canadian,,,,,,,,,[討論] 柯P比賴清德  請問一下這個等級差多少？,,2016-02-09T22:06:04+08:00,,,,,,
+--",,,,,ptt,,,,,,,,,,,[],,,,,,lamberjack,,HatePolitics,2016-02-09T22:06:04+08:00,,,,,,,Canadian,,,,2016-02-09T22:06:04+08:00,[討論] 柯P比賴清德  請問一下這個等級差多少？,,
 "
 請柯文哲教教我們該怎麽做,你是官,我們是民,民間出了問題不是你這個官要出來解决嗎
 ？你嘴裡說得很容易,日本客不來,你當官的想辨法,不然選你斡嘛,說風涼話,誰都會
@@ -35,4 +35,4 @@ https://m.facebook.com/story.php?story_fbid=10208657695706165&id=1423730852
 
 完全不把英明神武的馬總統放在眼裡
 
---",,Gossiping,33,,,2016-02-09T19:50:26+08:00,,[],,ptt,,,,,,,,,,,,s333,,,,,,,,,[ＦＢ] 李富城--柯總統好,,2016-02-09T19:50:26+08:00,,,,,,
+--",,,,,ptt,,,,,,,,,,,[],,,,,,33,,Gossiping,2016-02-09T19:50:26+08:00,,,,,,,s333,,,,2016-02-09T19:50:26+08:00,[ＦＢ] 李富城--柯總統好,,
