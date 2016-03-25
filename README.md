@@ -57,7 +57,7 @@ properties={
 # imageuri.py
 
 The function **imageuri( )**, which input string(content) and output array(image uri).
-And detect containg "http://o.ooooo/xxxx.jpg" or "http://imgur.com/xxxxx"
+And detect whether the extension is one of in **(".jpg",".png",".gif",".jpeg")** or contain **"http://imgur.com/xxxxx"**
 
 You can run `python imageuri.py` and remove the hash marks (#) from the last line "# test()",
 it'll run some tests.
